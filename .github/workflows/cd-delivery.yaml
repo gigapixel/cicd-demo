@@ -72,15 +72,3 @@ jobs:
           push: true
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
-
-  deploy:
-
-    runs-on: ubuntu-latest
-
-    steps:
-      - name: executing remote ssh commands using password
-        uses: appleboy/ssh-action@master
-        with:
-          host: ${{ secrets.SSH_HOST }}
-          script: |
-            docker run -p 8080:80 -d ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{ jobs.build-and-push-image.steps.meta.outputs.tags }}
