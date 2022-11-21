@@ -3,7 +3,7 @@ name: Node.js CD - Delivery
 on:
   push:
     tags:        
-      - dev-*
+      - prod-*
 
 env:
   REGISTRY: ghcr.io
