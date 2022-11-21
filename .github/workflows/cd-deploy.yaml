@@ -1,4 +1,4 @@
-name: Node.js CD - Delivery
+name: Node.js CD - Deploy
 
 on:
   push:
