@@ -88,6 +88,4 @@ jobs:
           ssh-keyscan -H ${{ secrets.SSH_HOST }} >> ~/.ssh/known_hosts
 
       - run: |
-          ssh ${{ secrets.SSH_USERNAME }}@${{ secrets.SSH_HOST }} << EOF
-            docker run -p 8080:80 -d ${{ fromJSON(needs.build-and-push-image.outputs.image-meta).tags[0] }}
-          EOF
+          ssh ${{ secrets.SSH_USERNAME }}@${{ secrets.SSH_HOST }} "docker run -p 8080:80 -d ${{ fromJSON(needs.build-and-push-image.outputs.image-meta).tags[0] }}"
