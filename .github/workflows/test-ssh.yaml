@@ -22,5 +22,4 @@ jobs:
           host: ${{ secrets.SSH_HOST }}
           username: ${{ secrets.SSH_USERNAME }}
           key: ${{ secrets.SSH_KEY }}
-          debug: true
-          script: docker run -p 8080:80 -d ghcr.io/revitate/cicd-demo:dev-13
+          script: "sudo docker run -p 8080:80 -d ghcr.io/revitate/cicd-demo:dev-13"
