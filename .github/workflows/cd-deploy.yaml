@@ -83,12 +83,12 @@ jobs:
     needs: [build-and-push-image]
 
     steps:
-      - name: create default public key
-        run: ssh-keygen -t ed25519 -P "" -f ~/.ssh/id_ed25519
-
-      - run: |
-          mkdir -p ~/.ssh/
-          ssh-keyscan -H ${{ secrets.SSH_HOST }} >> ~/.ssh/known_hosts
-
-      - run: |
-          ssh ${{ secrets.SSH_USERNAME }}@${{ secrets.SSH_HOST }} "docker run -p 8080:80 -d ${{ fromJSON(needs.build-and-push-image.outputs.image-meta).tags[0] }}"
+      - name: executing remote ssh commands using ssh key
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.SSH_HOST }}
+          username: ${{ secrets.SSH_USERNAME }}
+          key: ${{ secrets.SSH_KEY }}
+          script: |
+            sudo docker rm -f service || true
+            sudo docker run -p 80:80 -d --name service ${{ fromJSON(needs.build-and-push-image.outputs.image-meta).tags[0] }}
