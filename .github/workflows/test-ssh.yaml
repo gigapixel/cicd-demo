@@ -1,0 +1,24 @@
+name: Node.js CD - ssh
+
+on:
+  push:
+    tags:        
+      - test-*
+
+env:
+  REGISTRY: ghcr.io
+  IMAGE_NAME: ${{ github.repository }}
+
+jobs:
+  deploy:
+
+    runs-on: ubuntu-latest
+
+    needs: [build-and-push-image]
+
+    steps:
+      - uses: garygrossgarten/github-action-ssh@release
+        with:
+          command: ls -a
+          host: direct.labs.play-with-docker.com
+          username: ip172-18-0-94-cdtn6b60qau0009mgsb0
