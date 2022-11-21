@@ -6,6 +6,10 @@ describe('Sample Test', () => {
     expect(true).toBe(true)
   })
 
+  it('should test that false === false', () => {
+    expect(false).toBe(false)
+  })
+
   it("should return 'Express + TypeScript Server (v1.0.0)'", async () => {
     const res = await request(app).get('/')
     expect(res.statusCode).toEqual(200)
