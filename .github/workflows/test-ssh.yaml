@@ -18,9 +18,10 @@ jobs:
       - name: create default public key
         run: ssh-keygen -t ed25519 -P "" -f ~/.ssh/id_ed25519
 
-      - run: |
-          mkdir -p ~/.ssh/
-          ssh-keyscan -H direct.labs.play-with-docker.com >> ~/.ssh/known_hosts
-
-      - run: |
-          ssh -i ~/.ssh/id_ed25519 ip172-18-0-94-cdtn6b60qau0009mgsb0@direct.labs.play-with-docker.com "docker run -p 8080:80 -d ghcr.io/revitate/cicd-demo:dev-13"
+      - name: executing remote ssh commands using ssh key
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.SSH_HOST }}
+          username: ${{ secrets.SSH_USERNAME }}
+          key_path: ~/.ssh/id_ed25519
+          script: whoami
