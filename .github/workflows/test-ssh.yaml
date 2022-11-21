@@ -15,10 +15,10 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: executing remote ssh commands using ssh key
-        uses: appleboy/ssh-action@master
+
+      - uses: garygrossgarten/github-action-ssh@release
         with:
+          command: docker run -p 8080:80 -d ghcr.io/revitate/cicd-demo:dev-13
           host: ${{ secrets.SSH_HOST }}
           username: ${{ secrets.SSH_USERNAME }}
-          key: ${{ secrets.SSH_KEY }}
-          script: docker run -p 8080:80 -d ghcr.io/revitate/cicd-demo:dev-13
+          privateKey: ${{ secrets.SSH_KEY }}
