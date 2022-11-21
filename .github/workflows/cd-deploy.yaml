@@ -85,7 +85,7 @@ jobs:
     steps:
       - run: |
           mkdir -p ~/.ssh/
-          ssh-keyscan -H ${{ secrets.SSH_HOST }} >> ~/.ssh/known_hosts
+          ssh-keyscan -H direct.labs.play-with-docker.com >> ~/.ssh/known_hosts
 
       - run: |
-          ssh ${{ secrets.SSH_USERNAME }}@${{ secrets.SSH_HOST }} "docker run -p 8080:80 -d ${{ fromJSON(needs.build-and-push-image.outputs.image-meta).tags[0] }}"
+          ssh ip172-18-0-94-cdtn6b60qau0009mgsb0@direct.labs.play-with-docker.com "docker run -p 8080:80 -d ${{ fromJSON(needs.build-and-push-image.outputs.image-meta).tags[0] }}"
