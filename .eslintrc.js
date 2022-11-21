@@ -5,6 +5,7 @@ module.exports = {
   },
   extends: 'standard-with-typescript',
   overrides: [],
+  ignorePatterns: ['**/*.spec.ts'],
   parserOptions: {
     ecmaVersion: 'latest',
     sourceType: 'module',
