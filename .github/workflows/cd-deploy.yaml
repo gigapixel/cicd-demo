@@ -3,7 +3,7 @@ name: Node.js CD - Deploy
 on:
   push:
     tags:        
-      - dev-*
+      - deploy-*
 
 env:
   REGISTRY: ghcr.io
