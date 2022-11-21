@@ -15,6 +15,9 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+      - name: create default public key
+        run: ssh-keygen -t ed25519 -P "" -f ~/.ssh/id_ed25519
+
       - uses: garygrossgarten/github-action-ssh@release
         with:
           command: ls -a
