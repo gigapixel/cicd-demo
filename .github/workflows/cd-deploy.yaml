@@ -43,6 +43,9 @@ jobs:
       contents: read
       packages: write
 
+    outputs:
+      tags: ${{ steps.meta.outputs.tags }}
+
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3
@@ -87,4 +90,4 @@ jobs:
           username: ${{ secrets.SSH_USERNAME }}
           key: 1234
           script: |
-            docker run -p 8080:80 -d ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{ needs.build-and-push-image.steps.meta.outputs.tags }}
+            docker run -p 8080:80 -d ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{ needs.build-and-push-image.outputs.tags }}
