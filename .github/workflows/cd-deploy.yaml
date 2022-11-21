@@ -83,11 +83,9 @@ jobs:
     needs: [build-and-push-image]
 
     steps:
-      - name: executing remote ssh commands using password
-        uses: appleboy/ssh-action@master
-        with:
-          host: ${{ secrets.SSH_HOST }}
-          username: ${{ secrets.SSH_USERNAME }}
-          key: 1234
-          script: |
-            docker run -p 8080:80 -d ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{ needs.build-and-push-image.outputs.tags }}
+      - run: ssh-keyscan -H ${{ secrets.SSH_HOST }} >> ~/.ssh/known_hosts
+
+      - run: |
+          ssh ${{ secrets.SSH_USERNAME }}@${{ secrets.SSH_HOST }} << EOF
+            docker run -p 8080:80 -d ${{ needs.build-and-push-image.outputs.tags }}
+          EOF
