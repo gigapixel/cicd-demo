@@ -85,4 +85,4 @@ jobs:
         with:
           host: ${{ secrets.SSH_HOST }}
           script: |
-            docker run -p 8080:80 -d ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{ jobs.build-and-push-image.steps.meta.outputs.tags }}
+            docker run -p 8080:80 -d ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{ needs.build-and-push-image.steps.meta.outputs.tags }}
