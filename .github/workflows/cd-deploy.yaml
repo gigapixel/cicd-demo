@@ -83,9 +83,12 @@ jobs:
     needs: [build-and-push-image]
 
     steps:
-      - run: |
-          mkdir -p ~/.ssh/
-          ssh-keyscan -H direct.labs.play-with-docker.com >> ~/.ssh/known_hosts
+      - name: create default public key
+        run: ssh-keygen -t ed25519 -P "" -f ~/.ssh/id_ed25519
 
       - run: |
-          ssh ip172-18-0-94-cdtn6b60qau0009mgsb0@direct.labs.play-with-docker.com "docker run -p 8080:80 -d ${{ fromJSON(needs.build-and-push-image.outputs.image-meta).tags[0] }}"
+          mkdir -p ~/.ssh/
+          ssh-keyscan -H ${{ secrets.SSH_HOST }} >> ~/.ssh/known_hosts
+
+      - run: |
+          ssh ${{ secrets.USERNAME }}@${{ secrets.SSH_HOST }} "docker run -p 8080:80 -d ${{ fromJSON(needs.build-and-push-image.outputs.image-meta).tags[0] }}"
